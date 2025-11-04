@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Cumpleaños Mi Amor 💕</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Partículas flotantes de corazones */
+        .hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.3);
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container-custom {
+            position: relative;
+            z-index: 2;
+            padding: 40px 20px;
+        }
+
+        /* Sección de portada */
+        .hero-section {
+            text-align: center;
+            padding: 80px 20px;
+            color: white;
+        }
+
+        .hero-section h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .hero-section .subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .age-badge {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 3rem;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin: 20px 0;
+        }
+
+        /* Tarjetas de fotos */
+        .photo-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 30px 0;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .photo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .photo-caption {
+            color: #667eea;
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 15px;
+            font-style: italic;
+        }
+
+        /* Sección de mensaje especial */
+        .message-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 50px;
+            margin: 50px 0;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .message-section h2 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .message-text {
+            color: #333;
+            font-size: 1.3rem;
+            line-height: 2;
+            text-align: center;
+        }
+
+        /* Timeline de recuerdos */
+        .timeline {
+            position: relative;
+            padding: 50px 0;
+        }
+
+        .timeline-item {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.6s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-item h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        /* Galería de fotos en cuadrícula */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 30px 0;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+        }
+
+        /* Botón final */
+        .final-button {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        .btn-custom {
+            background: white;
+            color: #667eea;
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .btn-custom:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f0f;
+            position: absolute;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Emojis flotantes en fotos */
+        .photo-placeholder, .gallery-placeholder {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .floating-emoji {
+            position: absolute;
+            font-size: 2rem;
+            animation: float-emoji 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float-emoji {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            .age-badge {
+                font-size: 2rem;
+                padding: 15px 30px;
+            }
+            .message-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Corazones flotantes -->
+    <div class="hearts" id="hearts"></div>
+
+    <div class="container-custom">
+        <!-- Sección Hero -->
+        <div class="hero-section animate__animated animate__fadeInDown">
+            <h1>¡Feliz Cumpleaños Mi Javi Precioso! ❤️❤️❤️❤️😍🥰🥳🎉</h1>
+            <p class="subtitle">Apesar de todo, quiero que hoy la pases muy bonito, olvidate un poco del estres y las preocupaciones que no dan lugar a la felicidad y haz todo lo que te haga feliz. 🥺🫂💓 </p>
+            <div class="age-badge animate__animated animate__bounceIn animate__delay-1s" onclick="celebrateAge()" style="cursor: pointer;">
+                Felices 24 años mi vida 😘😘😘🥳✨✨
+            </div>
+         <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.9;">👆 Haz muchas veces clic aquí :)</p>
+        </div>
+
+        <!-- Tarjeta de foto principal -->
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="photo-card animate__animated animate__fadeInUp">
+                        <div class="photo-placeholder">
+                             <img src="f1.jpeg" alt="Foto especial"> 
+                             Perdón por las fotos, pero son las que tengo :)
+                        </div>
+                        <p class="photo-caption">
+                           Y sabes... Tienes los ojitos que nunca me cansaré de mirar y el corazón que siempre voy amar.❤️✨
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mensaje especial -->
+            <div class="message-section animate__animated animate__fadeIn">
+                <h2>💕 Con mucho cariño...💕</h2>
+                <p class="message-text">
+                    Le quiero dar gracias a Dios por este año que te regalo y quiero pedirle que te de una infinidad mas 🙏🏻❤️. Hoy es un gran día para decirte lo mucho que te amo y agradecerte por lo que has hecho por mi, gracias por darme de tu tiempo y sobre todo gracias por darme de tu amor, agradezco a la vida por presentarme a una persona como tú, con ese carácter tan increíble, con tus ojos lindos y por ese carisma tuyo tan característico, gracias de verdad por siempre apoyarme en los momentos más difíciles.Hoy cumples 24 años y quiero que sepas que cada día desde que comenzamos a habalar ha sido un regalo muy bonito ✨.  
+                    Eres la persona más especial que he conocido y me siento la más afortunada de compartir esta vida contigo. Tú me has dado mil razones para sonreir, ahora yo queiro darte dosmil razones para que seas feliz, porque para mi eres el principio al cual no quiero encotrar un final 🥰❤️‍🩹. Muchos a abrazos de oso 🐻🫂❤️✨ y besitos para ti 😘😘😘😘😘😘😘😘😘😘. TE AMO y quiero que podamos lograr nuestras metas juntos 🩵🩷✨.
+                    <br><br>
+                    <strong>Te amo más de lo que las palabras pueden expresar. 💖</strong>
+                    <br><br>
+                </p>
+            </div>
+
+            <div class="timeline">
+                
+                <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="photo-card animate__animated animate__fadeInUp">
+                         <p class="photo-caption">
+                        Me enamore del niño con los ojos mas bonitos que he visto y veré en toda mi vida, con esa carita tan preciosa que tienes 🥰😍.
+                        </p>
+                        <div class="photo-placeholder">
+                            Esta no podía faltar jsjs, estas guapísimoo
+                             <img src="f3.jpeg" alt="Foto especial"> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="timeline-item">
+                <h3>❤️❤️❤️ </h3>
+                <div style="display: flex; align-items: center; gap: 20px; margin-top: 15px;">
+                    <div class="photo-placeholder" style="height: 50%; width: 50%; margin-top: 15px;">
+                        <img src="f2.jpeg" alt="Foto especial">
+                    </div>
+                    <div style="width: 50%;">
+                        <p style="margin: 0; font-size: 1.1rem; line-height: 1.6;">
+                            Si pudiera describir lo que significas para mí, diría que eres todo lo que siempre soñe, lo que nunca imaginé encontrar y lo que jamás quiero perder. Recuerda siempre porfis que no te falta nada. No necesitas cambiar nada de ti. Eres un gran hombre, un amor de persona, eres trabajador, estás guapísimo, te esfuerzas todos los días y tienes el  corazón más noble que he conocido, jamás vayas a dudar de ti amor. ❤️
+                            <br>
+                            No me lo estas preguntando jajja, pero te lo quiero decir; me enamoré de ti por como eres conmigo, porque me tratas con cariño, con respeto y con una dulzura que no se compra ni se finge. Me enamoré de tus ojitos lindos, porque en ellos puedo encontrar la paz que siempre busqué y ver todo el universo. Sin saberlo y sin darme cuenta me enamoré por todas las cosas bonitas que haces por mi, por tus mensajes tan lindos, tus ánimos tan reconforantes y sobre todo por tus oraciones, has convetido momentos de mi vida, en recuerdos inolvidables, por estar siempre para mí; a pesar de lo ocupado que estas, tu tiempo será lo mas valioso siempre.  Me enamoré porque en ti encontré lo que jamas pensé encontraré con nadie mas, una conexión sincera, un amor limpio y una compañia que se siente a pesar de esta distancia toda fea :(. Me Enamoré porque sin pensarlo, me di cuenta que contigo tengo todo y que no me hace falta nada más que tu presencia para sentirme completa. Te llevo siempre en mi corazón y en mi pesammientos, desde que me levanto hasta que me duermo, solo en mis sueños aún me falta jajaj. No terminaría de darte razones por las que estoy enamorada de ti, quiero que sepas que te amo con locura y perdón de todo corazón por a veces hacerte sentir mal :'(. Mereces lo mejor del mundo y por eso me esfuerzo y le pido a Dios que me enseñe a amarte como debe ser. TE AMO INFINITO ❤️❤️❤️.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="final-button">
+                <button class="btn-custom" onclick="showFinalMessage()">
+                    💝 Haz clic aquí 💝
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Crear corazones flotantes
+        function createHeart() {
+            const hearts = document.getElementById('hearts');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            hearts.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 20000);
+        }
+
+        // Crear corazones periódicamente
+        setInterval(createHeart, 800);
+
+        // Agregar emojis 😍 flotantes a todas las fotos
+        function addFloatingEmojis() {
+            const photoContainers = document.querySelectorAll('.photo-placeholder, .gallery-placeholder');
+            
+            photoContainers.forEach(container => {
+                // Crear 3 emojis flotantes por contenedor
+                for (let i = 0; i < 3; i++) {
+                    const emoji = document.createElement('div');
+                    emoji.classList.add('floating-emoji');
+                    emoji.innerHTML = '😍';
+                    emoji.style.left = (20 + i * 30) + '%';
+                    emoji.style.top = (20 + i * 20) + '%';
+                    emoji.style.animationDelay = (i * 0.5) + 's';
+                    container.appendChild(emoji);
+                }
+            });
+        }
+
+        // Llamar la función cuando cargue la página
+        window.addEventListener('load', addFloatingEmojis);
+
+        // Función para celebrar al hacer clic en el botón de 24 años
+        function celebrateAge() {
+            const emojis = ['🥰', '🥳', '👏🏻'];
+            const ageBadge = document.querySelector('.age-badge');
+            
+            // Crear explosión de emojis
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                    emoji.style.position = 'fixed';
+                    emoji.style.left = ageBadge.offsetLeft + ageBadge.offsetWidth / 2 + 'px';
+                    emoji.style.top = ageBadge.offsetTop + ageBadge.offsetHeight / 2 + 'px';
+                    emoji.style.fontSize = '2rem';
+                    emoji.style.pointerEvents = 'none';
+                    emoji.style.zIndex = '9999';
+                    
+                    const angle = (Math.PI * 2 * i) / 30;
+                    const velocity = 200 + Math.random() * 100;
+                    const vx = Math.cos(angle) * velocity;
+                    const vy = Math.sin(angle) * velocity;
+                    
+                    document.body.appendChild(emoji);
+                    
+                    let posX = parseFloat(emoji.style.left);
+                    let posY = parseFloat(emoji.style.top);
+                    let opacity = 1;
+                    
+                    const animate = () => {
+                        posX += vx * 0.016;
+                        posY += vy * 0.016 + 2;
+                        opacity -= 0.015;
+                        
+                        emoji.style.left = posX + 'px';
+                        emoji.style.top = posY + 'px';
+                        emoji.style.opacity = opacity;
+                        emoji.style.transform = `rotate(${posX}deg)`;
+                        
+                        if (opacity > 0) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            emoji.remove();
+                        }
+                    };
+                    
+                    requestAnimationFrame(animate);
+                }, i * 50);
+            }
+            
+            // Vibrar el botón
+            ageBadge.style.animation = 'none';
+            setTimeout(() => {
+                ageBadge.style.animation = 'bounce 0.5s';
+            }, 10);
+        }
+
+        // Animación de aparición del timeline al hacer scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Mensaje final al hacer clic
+        function showFinalMessage() {
+            alert('¡Feliz cumpleaños mi amor! 🎂🎉\n\nQue este nuevo año de vida esté lleno de alegría, éxitos y momentos inolvidables. \n\nGracias por ser quien eres. ¡Te amo! 💕');
+            createConfetti();
+        }
+
+        // Crear confetti
+        function createConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.width = '10px';
+                    confetti.style.height = '10px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animation = 'confetti-fall 3s linear';
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+    </script>
+</body>
+</html>
